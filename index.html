@@ -7,15 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Simple Car Driving Game</title>
 
-  <link href="./lib/styling.css" rel="stylesheet" type="text/css" />
+  <link href="./styles.css" rel="stylesheet" type="text/css" />
+
+  <!-- Lib Files -->
+  <script src="./src/lib/jquery-2.1.1.js"></script>
+
+  <!-- Script Files -->
+  <script src="./src/utils.js"></script>
+  <script src="./src/game.js"></script>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <script src="./lib/jquery-2.1.1.js"></script>
-  <script src="./lib/util.js"></script>
-  <script src="./lib/game.js"></script>
-
 
   <div id="Instructions">
     <h1>Simple Car Driving Game</h1>
@@ -25,11 +28,9 @@
     <p>Black squares will end the game.</p>
     <p>Green squares for a speed boost!</p>
 
-    <button id="reset">
-      Restart
-    </button>
+    <button id="reset"> Restart </button>
   </div>
-  <canvas></canvas>
+  <canvas id="canvas"></canvas>
 
   <script>
     var canvasEl = document.getElementsByTagName("canvas")[0];
@@ -38,14 +39,17 @@
     canvasEl.width = (window.innerWidth - 10) / 2;
 
     function restart() {
-      var newGame = new Racer.Game(context, canvasEl.width, canvasEl.height);
+      const newGame = new Game(context, canvasEl.width, canvasEl.height);
       newGame.run();
+
+      console.log(newGame, newGame.KEYS)
+
+      <!-- TODO: Handle with event listeners? -->
       $(document).on('keydown', newGame.keyPressed.bind(newGame));
       $(document).on('keyup', newGame.keyUnpressed.bind(newGame));
     };
     restart();
     $('#reset').on('click', restart);
-
   </script>
 </body>
 
