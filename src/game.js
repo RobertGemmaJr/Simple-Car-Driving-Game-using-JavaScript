@@ -3,17 +3,6 @@
  * https://www.sourcecodester.com/javascript/15229/simple-car-driving-game-using-javascript-free-source-code.html#google_vignette
  */
 
-const KEYS = {
-  LEFT: 37,
-  UP: 38,
-  RIGHT: 39,
-  DOWN: 40,
-  A: 65,
-  D: 68,
-  S: 83,
-  W: 87,
-};
-
 class Game {
   constructor(context, xDim, yDim) {
     // Context and dimensions of the <canvas>
@@ -57,9 +46,9 @@ class Game {
     this.startTime = new Date().getTime();
 
     // Load images and generate the sprites
-    Util.loadImages(this);
-    Util.generateSprites(this);
-    Util.generateSegments(this);
+    loadImages(this);
+    generateSprites(this);
+    generateSegments(this);
   }
 
   keyPressed(event) {
@@ -91,14 +80,14 @@ class Game {
   }
 
   collisionDetected(color) {
-    if (color === Util.COLORS.STOP) {
+    if (color === COLORS.STOP) {
       this.speed = 5;
-    } else if (color === Util.COLORS.GO) {
+    } else if (color === COLORS.GO) {
       this.speed += 80;
-    } else if (color === Util.COLORS.DEAD) {
+    } else if (color === COLORS.DEAD) {
       this.gameOver = true;
       this.finalGameState = "YOU LOSE";
-    } else if (color === Util.COLORS.WIN) {
+    } else if (color === COLORS.WIN) {
       this.gameOver = true;
       this.finalGameState = "YOU WIN";
     }
@@ -134,7 +123,7 @@ class Game {
     for (i = 0; i < this.drawDistance; i++) {
       const n = (i + currentSegment) % this.segments.length;
       if (this.segments[n][0] > this.playerZ) {
-        Util.drawSegment(
+        drawSegment(
           this,
           this.segments[n][0],
           this.segments[n][1],
@@ -146,8 +135,8 @@ class Game {
   }
 
   drawSpritesAndDetectCollisions() {
-    Util.drawSprites(this);
-    Util.detectCollisions(this);
+    drawSprites(this);
+    detectCollisions(this);
   }
 
   drawBackground() {
