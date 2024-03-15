@@ -1,0 +1,17 @@
+{
+  "name": "simple-car-driving-game-using-javascript",
+  "description": "",
+  "version": "1.0.0",
+  "author": "RobertGemmaJr",
+  "license": "ISC",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "devDependencies": {
+    "parcel": "^1.2.8"
+  }
+}
