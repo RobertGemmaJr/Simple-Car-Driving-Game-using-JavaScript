@@ -42,6 +42,8 @@
       const newGame = new Game(context, canvasEl.width, canvasEl.height);
       newGame.run();
 
+      console.log(newGame, newGame.KEYS)
+
       $(document).on('keydown', newGame.keyPressed.bind(newGame));
       $(document).on('keyup', newGame.keyUnpressed.bind(newGame));
     };
