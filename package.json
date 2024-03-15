@@ -5,13 +5,13 @@
   "author": "RobertGemmaJr",
   "license": "ISC",
   "scripts": {
-    "start": "parcel index.html",
+    "dev": "parcel index.html",
     "build": "parcel build index.html"
   },
   "keywords": [
     "javascript"
   ],
   "devDependencies": {
-    "parcel": "^1.2.8"
+    "parcel": "^2.12.0"
   }
 }
