@@ -94,7 +94,6 @@
 
   Game.prototype.adjustPosition = function () {
     //simulate drag
-    console.log(this.speed);
     var slowDown = this.onGrass ? -5 : -this.speed / this.maxSpeed;
     if (this.speed >= this.maxSpeed) {
       this.speed += slowDown;
