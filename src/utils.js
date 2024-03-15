@@ -29,7 +29,7 @@ function project(game, worldX, worldY, worldZ, objectWidth) {
 }
 
 // Draws a simple polygon
-function polygon(ctx, x1, y1, x2, y2, x3, y3, x4, y4, color) {
+function drawPolygon(ctx, x1, y1, x2, y2, x3, y3, x4, y4, color) {
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.moveTo(x1, y1);
@@ -40,6 +40,7 @@ function polygon(ctx, x1, y1, x2, y2, x3, y3, x4, y4, color) {
   ctx.fill();
 }
 
+// Draw the sprites in view
 function drawSprites(game) {
   for (i = 0; i < game.numberOfSprites; i++) {
     var currentSprite = game.sprites[i];
@@ -55,6 +56,7 @@ function drawSprites(game) {
   checkForFinish(game);
 }
 
+// Check if the player has finished the game
 function checkForFinish(game) {
   var z = (game.numOfSegments - 100) * game.segmentLength;
   if (game.playerZ < z && z - game.playerZ < game.segmentLength * game.drawDistance) {
@@ -66,13 +68,14 @@ function checkForFinish(game) {
     var x2 = end[0];
     var y2 = end[1];
     var w2 = end[2];
-    polygon(game.ctx, x1 - w1, y1, x1 + w1, y1, x2 + w2, y2, x2 - w2, y2, COLORS.WIN);
+    drawPolygon(game.ctx, x1 - w1, y1, x1 + w1, y1, x2 + w2, y2, x2 - w2, y2, COLORS.WIN);
   }
   if (game.playerZ > z) {
     game.collisionDetected(COLORS.WIN);
   }
 }
 
+// Draw a single sprite
 function renderSprite(game, x, y, z, color) {
   var start = project(game, x, y, z, game.spriteWidth);
   var end = project(game, x, y, z + game.spriteLength, game.spriteWidth);
@@ -83,9 +86,10 @@ function renderSprite(game, x, y, z, color) {
   var x2 = end[0];
   var y2 = end[1];
   var w2 = end[2];
-  polygon(game.ctx, x1 - w1, y1, x1 + w1, y1, x2 + w2, y2, x2 - w2, y2, color);
+  drawPolygon(game.ctx, x1 - w1, y1, x1 + w1, y1, x2 + w2, y2, x2 - w2, y2, color);
 }
 
+// Load the needed images
 function loadImages(game) {
   game.sunset = new Image();
   game.car = new Image();
@@ -93,6 +97,7 @@ function loadImages(game) {
   game.car.src = "./photos/porsche.png";
 }
 
+// Generate the sprites in the game
 function generateSprites(game) {
   for (i = 0; i < game.numberOfSprites; i++) {
     var x = getRandomInt(-game.roadWidth + game.spriteWidth, game.roadWidth - game.spriteWidth);
@@ -108,6 +113,7 @@ function generateSprites(game) {
   }
 }
 
+// Generate the segments in the game
 function generateSegments(game) {
   for (var n = 0; n < game.numOfSegments; n++) {
     var color = Math.floor(n) % 3 ? "#696969" : "white";
@@ -116,6 +122,7 @@ function generateSegments(game) {
   }
 }
 
+// Detect if the player has collided with a sprite
 function detectCollisions(game, x, z, color) {
   if (
     game.playerZ > z - 400 &&
@@ -127,6 +134,7 @@ function detectCollisions(game, x, z, color) {
   }
 }
 
+// Draw a single segment
 function drawSegment(game, start, end, color, grassColor) {
   var start = project(game, 0, 0, start, game.roadWidth);
   var end = project(game, 0, 0, end, game.roadWidth);
@@ -137,10 +145,21 @@ function drawSegment(game, start, end, color, grassColor) {
   var x2 = end[0];
   var y2 = end[1];
   var w2 = end[2];
-  polygon(game.ctx, 0, y1, x1 - w1, y1, x2 - w2, y2, 0, y2, grassColor);
-  polygon(game.ctx, game.width, y1, x1 + w1, y1, x2 + w2, y2, game.width, y2, grassColor);
-  polygon(game.ctx, x1 - w1, y1, x1 + w1, y1, x2 + w2, y2, x2 - w2, y2, "#696969");
-  polygon(game.ctx, x1 - w1 / 25, y1, x1 + w1 / 25, y1, x2 + w2 / 25, y2, x2 - w2 / 25, y2, color);
+  drawPolygon(game.ctx, 0, y1, x1 - w1, y1, x2 - w2, y2, 0, y2, grassColor);
+  drawPolygon(game.ctx, game.width, y1, x1 + w1, y1, x2 + w2, y2, game.width, y2, grassColor);
+  drawPolygon(game.ctx, x1 - w1, y1, x1 + w1, y1, x2 + w2, y2, x2 - w2, y2, "#696969");
+  drawPolygon(
+    game.ctx,
+    x1 - w1 / 25,
+    y1,
+    x1 + w1 / 25,
+    y1,
+    x2 + w2 / 25,
+    y2,
+    x2 - w2 / 25,
+    y2,
+    color
+  );
 }
 
 function getRandomInt(min, max) {

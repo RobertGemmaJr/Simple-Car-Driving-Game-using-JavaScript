@@ -10,36 +10,49 @@ class Game {
     this.width = xDim;
     this.height = yDim;
 
-    // Position of the camera
-    this.cameraHeight = 50;
-    this.cameraDepth = 10;
+    // CONSTANTS
 
-    // Position of the player
-    this.playerX = 0;
-    this.playerZ = 0;
+    // Position of the camera
+    this.cameraHeight = 50; // CONSTANT
+    this.cameraDepth = 10; // CONSTANT
 
     // Road dimensions (boundaries includes the grass)
     this.roadWidth = 80;
     this.boundaries = [-160, 160];
 
-    // Segments of the ground to be drawn
-    this.segments = [];
+    // The total game is 2000 * 200px long
     this.numOfSegments = 2000;
     this.segmentLength = 200;
+
+    // Maximum allowed speed of the player
+    this.maxSpeed = 80;
+
+    // The total distance (z) to draw in a single frame
+    this.drawDistance = 35;
+
+    // The size of an individual sprite (polygon)
+    this.spriteWidth = 20;
+    this.spriteLength = 250;
+
+    // The total number of sprites in the game
+    this.numberOfSprites = 120;
+
+    // THESE CHANGE AS THE GAME IS PLAYED
+
+    // Segments of the ground to be drawn
+    this.segments = [];
+
+    // Sprites (polygons) to be drawn
+    this.sprites = [];
+
+    // Position of the player
+    this.playerX = 0;
+    this.playerZ = 0;
 
     // Player speed and change in speed
     this.speed = 0;
     this.acceleration = 0;
-    this.maxSpeed = 80;
     this.dx = 0;
-
-    this.drawDistance = 35;
-
-    // Spites to be drawn
-    this.sprites = [];
-    this.spriteWidth = 20;
-    this.spriteLength = 250;
-    this.numberOfSprites = 120;
 
     // Whether or not the game is over and if won/lost
     this.gameOver = false;
@@ -51,6 +64,8 @@ class Game {
     generateSprites(this);
     generateSegments(this);
   }
+
+  // KEYBOARD EVENT HANDLERS
 
   keyPressed(event) {
     if (event.which === KEYS.UP || event.which === KEYS.W) {
@@ -80,6 +95,7 @@ class Game {
     }
   }
 
+  // Detect if player has collided with a sprite
   collisionDetected(color) {
     if (color === COLORS.STOP) {
       this.speed = 5;
@@ -94,6 +110,7 @@ class Game {
     }
   }
 
+  // Move the player on the canvas
   adjustPosition() {
     var slowDown = this.onGrass ? -5 : -this.speed / this.maxSpeed;
     if (this.speed >= this.maxSpeed) {
@@ -119,6 +136,20 @@ class Game {
     this.playerZ += this.speed;
   }
 
+  // DRAW FUNCTIONS
+
+  // Draw the background image
+  drawBackground() {
+    this.ctx.drawImage(
+      this.sunset,
+      this.playerX * -0.1 - this.width / 2,
+      -this.height / 2 - 50,
+      this.width * 2,
+      this.height * 2
+    );
+  }
+
+  // Draw the needed segments of the road
   drawRoad() {
     var currentSegment = Math.floor(this.playerZ / 200) % this.segments.length;
     for (i = 0; i < this.drawDistance; i++) {
@@ -135,21 +166,7 @@ class Game {
     }
   }
 
-  drawSpritesAndDetectCollisions() {
-    drawSprites(this);
-    detectCollisions(this);
-  }
-
-  drawBackground() {
-    this.ctx.drawImage(
-      this.sunset,
-      this.playerX * -0.1 - this.width / 2,
-      -this.height / 2 - 50,
-      this.width * 2,
-      this.height * 2
-    );
-  }
-
+  // Draw the car image
   drawCar() {
     this.ctx.drawImage(
       this.car,
@@ -160,29 +177,41 @@ class Game {
     );
   }
 
+  // Draw the timer
   drawTimer() {
     this.ctx.font = "10px sans-serif";
     this.ctx.fillStyle = "black";
     this.ctx.fillText("Your Time: " + (new Date().getTime() - this.startTime) / 1000, 10, 20);
   }
 
+  // Render a frame and handle the physics
   render() {
-    this.ctx.clearRect(0, 0, this.width, this.height);
+    // Adjust the player position
     this.adjustPosition();
+
+    // Draw the frame
+    this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawBackground();
     this.drawRoad();
-    this.drawSpritesAndDetectCollisions();
     this.drawCar();
     this.drawTimer();
+    drawSprites(this);
+
+    // Check for collisions
+    detectCollisions(this);
     if (this.gameOver) {
       this.endGame();
     }
   }
 
+  // PUBLIC FUNCTIONS
+
+  // Begin rendering the game
   run() {
     this.gameLoop = setInterval(this.render.bind(this), 1000 / 60);
   }
 
+  // Stop rendering the game and render the end screen
   endGame() {
     clearInterval(this.gameLoop);
     this.ctx.clearRect(0, 0, this.width, this.height);
@@ -201,15 +230,3 @@ class Game {
     }
   }
 }
-
-// TODO: Just make this an object?
-// Game.KEYS = {
-//   LEFT: 37,
-//   UP: 38,
-//   RIGHT: 39,
-//   DOWN: 40,
-//   A: 65,
-//   D: 68,
-//   S: 83,
-//   W: 87,
-// };
