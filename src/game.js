@@ -3,72 +3,87 @@
  * https://www.sourcecodester.com/javascript/15229/simple-car-driving-game-using-javascript-free-source-code.html#google_vignette
  */
 
+const KEYS = {
+  LEFT: 37,
+  UP: 38,
+  RIGHT: 39,
+  DOWN: 40,
+  A: 65,
+  D: 68,
+  S: 83,
+  W: 87,
+};
+
 class Game {
   constructor(context, xDim, yDim) {
+    // Context and dimensions of the <canvas>
     this.ctx = context;
     this.width = xDim;
     this.height = yDim;
+
+    // Position of the camera
     this.cameraHeight = 50;
     this.cameraDepth = 10;
+
+    // Position of the player
     this.playerX = 0;
     this.playerZ = 0;
+
+    // Road dimensions (boundaries includes the grass)
     this.roadWidth = 80;
     this.boundaries = [-160, 160];
+
+    // Segments of the ground to be drawn
     this.segments = [];
+    this.numOfSegments = 2000;
+    this.segmentLength = 200;
+
+    // Player speed
     this.speed = 0;
     this.acceleration = 0;
     this.maxSpeed = 80;
     this.dx = 0;
-    this.segments = [];
-    this.numOfSegments = 2000;
-    this.segmentLength = 200;
+
     this.drawDistance = 35;
+
+    // Spites to be drawn
     this.sprites = [];
     this.spriteWidth = 20;
     this.spriteLength = 250;
     this.numberOfSprites = 120;
+
     this.gameOver = false;
     this.finalGameState = null;
     this.startTime = new Date().getTime();
 
-    this.KEYS = {
-      LEFT: 37,
-      UP: 38,
-      RIGHT: 39,
-      DOWN: 40,
-      A: 65,
-      D: 68,
-      S: 83,
-      W: 87,
-    };
-
+    // Load images and generate the sprites
     Util.loadImages(this);
     Util.generateSprites(this);
     Util.generateSegments(this);
   }
 
   keyPressed(event) {
-    if (event.which === this.KEYS.UP || event.which === this.KEYS.W) {
+    if (event.which === KEYS.UP || event.which === KEYS.W) {
       this.acceleration = 0.5;
     }
-    if (event.which === this.KEYS.RIGHT || event.which === this.KEYS.D) {
+    if (event.which === KEYS.RIGHT || event.which === KEYS.D) {
       this.dx = 1 / 55;
     }
-    if (event.which === this.KEYS.LEFT || event.which === this.KEYS.A) {
+    if (event.which === KEYS.LEFT || event.which === KEYS.A) {
       this.dx = -1 / 55;
     }
   }
 
   keyUnpressed(event) {
-    if (event.which === this.KEYS.UP || event.which === this.KEYS) {
+    if (event.which === KEYS.UP || event.which === KEYS.W) {
       this.acceleration = -0.5;
     }
-    if (event.which === this.KEYS.RIGHT) {
+    if (event.which === KEYS.RIGHT) {
       if (this.dx === 1 / 55) {
         this.dx = 0;
       }
     }
-    if (event.which === this.KEYS.LEFT) {
+    if (event.which === KEYS.LEFT) {
       if (this.dx === -1 / 55) {
         this.dx = 0;
       }

@@ -44,12 +44,12 @@
 
       console.log(newGame, newGame.KEYS)
 
+      <!-- TODO: Handle with event listeners? -->
       $(document).on('keydown', newGame.keyPressed.bind(newGame));
       $(document).on('keyup', newGame.keyUnpressed.bind(newGame));
     };
     restart();
     $('#reset').on('click', restart);
-
   </script>
 </body>
 
