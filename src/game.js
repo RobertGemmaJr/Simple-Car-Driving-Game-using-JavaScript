@@ -27,7 +27,7 @@ class Game {
     this.numOfSegments = 2000;
     this.segmentLength = 200;
 
-    // Player speed
+    // Player speed and change in speed
     this.speed = 0;
     this.acceleration = 0;
     this.maxSpeed = 80;
@@ -41,6 +41,7 @@ class Game {
     this.spriteLength = 250;
     this.numberOfSprites = 120;
 
+    // Whether or not the game is over and if won/lost
     this.gameOver = false;
     this.finalGameState = null;
     this.startTime = new Date().getTime();

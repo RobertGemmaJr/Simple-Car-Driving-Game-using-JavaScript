@@ -18,7 +18,7 @@ const KEYS = {
 
 function project(game, worldX, worldY, worldZ, objectWidth) {
   var cameraX = worldX - game.playerX;
-  //camera height is essentially 'playerY'
+  // camera height is essentially 'playerY'
   var cameraY = worldY - game.cameraHeight;
   var cameraZ = worldZ - game.playerZ;
   var scale = game.cameraDepth / cameraZ;
@@ -28,6 +28,7 @@ function project(game, worldX, worldY, worldZ, objectWidth) {
   return [x, y, w];
 }
 
+// Draws a simple polygon
 function polygon(ctx, x1, y1, x2, y2, x3, y3, x4, y4, color) {
   ctx.fillStyle = color;
   ctx.beginPath();
