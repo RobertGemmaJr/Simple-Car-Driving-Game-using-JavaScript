@@ -7,18 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Simple Car Driving Game</title>
 
-  <link href="./src/styling.css" rel="stylesheet" type="text/css" />
-</head>
+  <link href="./styles.css" rel="stylesheet" type="text/css" />
 
-<body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
   <!-- Lib Files -->
   <script src="./src/lib/jquery-2.1.1.js"></script>
 
   <!-- Script Files -->
   <script src="./src/util.js"></script>
   <script src="./src/game.js"></script>
+</head>
 
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
 
   <div id="Instructions">
     <h1>Simple Car Driving Game</h1>
@@ -30,7 +30,7 @@
 
     <button id="reset"> Restart </button>
   </div>
-  <canvas></canvas>
+  <canvas id="canvas"></canvas>
 
   <script>
     var canvasEl = document.getElementsByTagName("canvas")[0];
