@@ -143,7 +143,7 @@ function renderSprite(game, x, y, z, color) {
   // Polygon is written on the ground in a square (X and Z, polygon has no height)
   // Image needs to be drawn from the ground (X and Y, image has no depth)
   drawPolygon(game.ctx, x1 - w1, y1, x1 + w1, y1, x2 + w2, y2, x2 - w2, y2, color);
-  game.ctx.drawImage(game.sunset, x1 - w1, y1, x1 + w1 - (x1 - w1), y2 - y1);
+  game.ctx.drawImage(game.car, x1 - w1, y1, x1 + w1 - (x1 - w1), y2 - y1);
 }
 
 // Draw a single segment
@@ -173,22 +173,3 @@ function drawSegment(game, start, end, color, grassColor) {
     color
   );
 }
-
-const test = {
-  drawImage: {
-    x: 522,
-    y: 426,
-    w: 200,
-    h: 200,
-  },
-  drawPolygon: {
-    x1: 522,
-    y1: 426,
-    x2: 554,
-    y2: 426,
-    x3: 553,
-    y3: 425,
-    x4: 523,
-    y4: 425,
-  },
-};
