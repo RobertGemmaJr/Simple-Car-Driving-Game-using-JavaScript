@@ -48,6 +48,7 @@ class Game {
     // Position of the player
     this.playerX = 0;
     this.playerZ = 0;
+    // Note the player is always "on" the road so y is always 0
 
     // Player speed and change in speed
     this.speed = 0;
