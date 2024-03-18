@@ -158,10 +158,10 @@ class Game {
       if (this.segments[n][0] > this.playerZ) {
         drawSegment(
           this,
-          this.segments[n][0],
-          this.segments[n][1],
-          this.segments[n][2],
-          this.segments[n][3]
+          this.segments[n][0], // Start z
+          this.segments[n][1], // End z
+          this.segments[n][2], // Color
+          this.segments[n][3] // Gras color
         );
       }
     }
@@ -194,9 +194,9 @@ class Game {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawBackground();
     this.drawRoad();
+    drawSprites(this);
     this.drawCar();
     this.drawTimer();
-    drawSprites(this);
 
     // Check for collisions
     detectCollisions(this);

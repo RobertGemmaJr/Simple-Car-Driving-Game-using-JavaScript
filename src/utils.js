@@ -143,7 +143,7 @@ function renderSprite(game, x, y, z, color) {
   // Polygon is written on the ground in a square (X and Z, polygon has no height)
   // Image needs to be drawn from the ground (X and Y, image has no depth)
   drawPolygon(game.ctx, x1 - w1, y1, x1 + w1, y1, x2 + w2, y2, x2 - w2, y2, color);
-  game.ctx.drawImage(game.car, x1 - w1, y1, x1 + w1 - (x1 - w1), y2 - y1);
+  game.ctx.drawImage(game.car, x1 - w1, y1, (x1 + w1 - (x1 - w1)) * 1, (y2 - y1) * 1);
 }
 
 // Draw a single segment
